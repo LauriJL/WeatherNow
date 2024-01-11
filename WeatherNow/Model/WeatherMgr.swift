@@ -17,12 +17,26 @@ struct WeatherMgr {
     
     var delegate: WeatherManagerDelegate?
     
-    func fetchWeatherData(cityName: String) {
+    func fetchWeatherData(cityName: String? = nil,  latitude: Double? = nil, longitude: Double? = nil) {
         guard let api_key = Bundle.main.object(forInfoDictionaryKey: "OpenWeatherAPIKey") as? String
             else { fatalError("not found") }
-        let urlString = "\(weatherURL)&q=\(cityName)&appid=\(api_key)"
-        urlRequest(urlString: urlString)
+        if cityName != nil {
+            let urlString = "\(weatherURL)&appid=\(api_key)&q=\(cityName ?? "Helsinki")"
+            urlRequest(urlString: urlString)
+            print(urlString)
+        } else {
+            let urlString = "\(weatherURL)&appid=\(api_key)&lat=\(latitude ?? 60.24416)&lon=\(longitude ?? 24.89239)"
+            urlRequest(urlString: urlString)
+            print(urlString)
+        }
     }
+    
+//    func fetchWeatherData(cityName: String) {
+//        guard let api_key = Bundle.main.object(forInfoDictionaryKey: "OpenWeatherAPIKey") as? String
+//            else { fatalError("not found") }
+//        let urlString = "\(weatherURL)&q=\(cityName)&appid=\(api_key)"
+//        urlRequest(urlString: urlString)
+//    }
     
     func urlRequest(urlString: String) {
         // Create URL

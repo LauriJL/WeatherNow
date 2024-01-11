@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
    
@@ -21,6 +22,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     @IBOutlet weak var celsiusLabel2: UILabel!
     
     var weatherMgr = WeatherMgr()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +35,21 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         degreeLabel2.isHidden = true
         celsiusLabel2.isHidden = true
         
+        // Location
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
         // Delegates
         weatherMgr.delegate = self
         searchField.delegate = self
     }
-
+    
+    
+    @IBAction func locationPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+    
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         cityLabel.text = searchField.text!
         searchField.endEditing(true)
@@ -86,3 +98,19 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     }
 }
 
+// MARK: - CLLocationManagerDelegate
+extension WeatherViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            print(lat,lon)
+            weatherMgr.fetchWeatherData(latitude: lat, longitude: lon)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}
