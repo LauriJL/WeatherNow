@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		394704AD2B4FFF220021D067 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394704AC2B4FFF220021D067 /* InfoViewController.swift */; };
 		398D95232B4D287A006608D6 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398D95222B4D287A006608D6 /* WeatherData.swift */; };
 		398D95252B4D2E58006608D6 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398D95242B4D2E58006608D6 /* WeatherModel.swift */; };
 		39B6AFF32B48303D003D2D58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B6AFF22B48303D003D2D58 /* AppDelegate.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		394704AC2B4FFF220021D067 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		398D95222B4D287A006608D6 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		398D95242B4D2E58006608D6 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		39B6AFEF2B48303D003D2D58 /* WeatherNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +79,7 @@
 		39D7EE0B2B4C183A007E5B12 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				394704AC2B4FFF220021D067 /* InfoViewController.swift */,
 				39B6AFF62B48303D003D2D58 /* WeatherViewController.swift */,
 			);
 			path = Controller;
@@ -85,8 +88,8 @@
 		39D7EE0C2B4C1919007E5B12 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				39D7EE0D2B4C1944007E5B12 /* WeatherMgr.swift */,
 				398D95222B4D287A006608D6 /* WeatherData.swift */,
+				39D7EE0D2B4C1944007E5B12 /* WeatherMgr.swift */,
 				398D95242B4D2E58006608D6 /* WeatherModel.swift */,
 			);
 			path = Model;
@@ -166,6 +169,7 @@
 				39B6AFF72B48303D003D2D58 /* WeatherViewController.swift in Sources */,
 				398D95232B4D287A006608D6 /* WeatherData.swift in Sources */,
 				39D7EE0E2B4C1945007E5B12 /* WeatherMgr.swift in Sources */,
+				394704AD2B4FFF220021D067 /* InfoViewController.swift in Sources */,
 				39B6AFF32B48303D003D2D58 /* AppDelegate.swift in Sources */,
 				398D95252B4D2E58006608D6 /* WeatherModel.swift in Sources */,
 				39B6AFF52B48303D003D2D58 /* SceneDelegate.swift in Sources */,

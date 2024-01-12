@@ -20,20 +20,25 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     @IBOutlet weak var feelsLikeTempLabel: UILabel!
     @IBOutlet weak var degreeLabel2: UILabel!
     @IBOutlet weak var celsiusLabel2: UILabel!
+    @IBOutlet weak var infoButton: UIButton!
     
     var weatherMgr = WeatherMgr()
     let locationManager = CLLocationManager()
     
+    // For info pane
+    var cityNameInfo: String = ""
+    var temperatureInfo: String = ""
+    var feelsLikeInfo: String = ""
+    var maxTempInfo: String = ""
+    var minTempInfo: String = ""
+    var pressureInfo: String = ""
+    var humidityInfo: String = ""
+    var windSpeedInfo: String = ""
+    var windDirInfo: String = ""
+    var windGustInfo: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherSymbolImageView.isHidden = true
-        temperatureLabel.isHidden = true
-        degreeLabel.isHidden = true
-        celsiusLabel.isHidden = true
-        feelsLikeLabel.isHidden = true
-        feelsLikeTempLabel.isHidden = true
-        degreeLabel2.isHidden = true
-        celsiusLabel2.isHidden = true
         
         // Location
         locationManager.delegate = self
@@ -51,13 +56,34 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     }
     
     @IBAction func searchButtonPressed(_ sender: UIButton) {
-        cityLabel.text = searchField.text!
+        //cityLabel.text = searchField.text!
         searchField.endEditing(true)
     }
     
+    @IBAction func infoButtonPressed(_ sender: UIButton) {
+        print("Info pressed")
+        self.performSegue(withIdentifier: "goToInfo", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToInfo" {
+            let destinationVC = segue.destination as! InfoViewController
+            destinationVC.cityName = cityNameInfo
+            destinationVC.temperature = temperatureInfo
+            destinationVC.feelsLike = feelsLikeInfo
+            destinationVC.maxTemp = maxTempInfo
+            destinationVC.minTemp = minTempInfo
+            destinationVC.humidity = humidityInfo
+            destinationVC.pressure = pressureInfo
+            destinationVC.windSpeed = windSpeedInfo
+            destinationVC.windDir = windDirInfo
+            destinationVC.windGust = windGustInfo
+        }
+    }
+    
+    
     // Process pressing of Return button on keypad
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //cityLabel.text = searchField.text!
         searchField.endEditing(true)
         return true
     }
@@ -81,19 +107,23 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     }
     
     func didUpdateWeather(weather: WeatherModel) {
+        cityNameInfo = weather.cityName
+        temperatureInfo = weather.temperatureString
+        feelsLikeInfo = weather.feelsLikeString
+        maxTempInfo = weather.temp_maxString
+        minTempInfo = weather.temp_minString
+        pressureInfo = weather.pressureString
+        humidityInfo = weather.humidityString
+        windSpeedInfo = weather.windSpeedString
+        windDirInfo = weather.windDirString
+        print(weather.windDirString)
+        windGustInfo = weather.windGustString
+        
         DispatchQueue.main.async {
             self.cityLabel.text = weather.cityName
-            self.temperatureLabel.isHidden = false
             self.temperatureLabel.text = weather.temperatureString
-            self.degreeLabel.isHidden = false
-            self.celsiusLabel.isHidden = false
-            self.weatherSymbolImageView.isHidden = false
             self.weatherSymbolImageView.image = UIImage(systemName: weather.conditionName)
-            self.feelsLikeLabel.isHidden = false
-            self.feelsLikeTempLabel.isHidden = false
             self.feelsLikeTempLabel.text = weather.feelsLikeString
-            self.degreeLabel2.isHidden = false
-            self.celsiusLabel2.isHidden = false
         }
     }
 }

@@ -31,13 +31,6 @@ struct WeatherMgr {
         }
     }
     
-//    func fetchWeatherData(cityName: String) {
-//        guard let api_key = Bundle.main.object(forInfoDictionaryKey: "OpenWeatherAPIKey") as? String
-//            else { fatalError("not found") }
-//        let urlString = "\(weatherURL)&q=\(cityName)&appid=\(api_key)"
-//        urlRequest(urlString: urlString)
-//    }
-    
     func urlRequest(urlString: String) {
         // Create URL
         if let url = URL(string: urlString) {
@@ -69,9 +62,16 @@ struct WeatherMgr {
             let name = decodedData.name
             let temperature = decodedData.main.temp
             let feels_like = decodedData.main.feels_like
+            let temp_max = decodedData.main.temp_max
+            let temp_min = decodedData.main.temp_min
+            let pressure = decodedData.main.pressure
+            let humidity = decodedData.main.humidity
+            let wind_speed = decodedData.wind.speed
+            let wind_direction = decodedData.wind.deg
+            let wind_gust = decodedData.wind.gust
             let conditionCode = decodedData.weather[0].id
             
-            let weather = WeatherModel(cityName: name, temperature: temperature, feels_like: feels_like, conditionId: conditionCode)
+            let weather = WeatherModel(cityName: name, conditionId: conditionCode, temperature: temperature, feels_like: feels_like, temp_min: temp_min, temp_max: temp_max, pressure: pressure, humidity: humidity, wind_speed: wind_speed, wind_direction: wind_direction, wind_gust: wind_gust)
             
             return weather
         } catch {
