@@ -65,10 +65,10 @@ struct WeatherMgr {
             let temp_max = decodedData.main.temp_max
             let temp_min = decodedData.main.temp_min
             let pressure = decodedData.main.pressure
-            let humidity = decodedData.main.humidity
-            let wind_speed = decodedData.wind.speed
-            let wind_direction = decodedData.wind.deg
-            let wind_gust = decodedData.wind.gust
+            let humidity = decodedData.main.humidity 
+            let wind_speed = decodedData.wind.speed ?? -1
+            let wind_direction = decodedData.wind.deg ?? -1
+            let wind_gust = decodedData.wind.gust ?? -1
             let conditionCode = decodedData.weather[0].id
             
             let weather = WeatherModel(cityName: name, conditionId: conditionCode, temperature: temperature, feels_like: feels_like, temp_min: temp_min, temp_max: temp_max, pressure: pressure, humidity: humidity, wind_speed: wind_speed, wind_direction: wind_direction, wind_gust: wind_gust)

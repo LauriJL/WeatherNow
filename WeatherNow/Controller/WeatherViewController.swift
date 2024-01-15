@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+class WeatherViewController: UIViewController {
    
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
@@ -50,14 +50,8 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         searchField.delegate = self
     }
     
-    
     @IBAction func locationPressed(_ sender: UIButton) {
         locationManager.requestLocation()
-    }
-    
-    @IBAction func searchButtonPressed(_ sender: UIButton) {
-        //cityLabel.text = searchField.text!
-        searchField.endEditing(true)
     }
     
     @IBAction func infoButtonPressed(_ sender: UIButton) {
@@ -80,7 +74,14 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
             destinationVC.windGust = windGustInfo
         }
     }
-    
+
+}
+
+// MARK: - UITextFieldDelegate
+extension WeatherViewController: UITextFieldDelegate {
+    @IBAction func searchButtonPressed(_ sender: UIButton) {
+        searchField.endEditing(true)
+    }
     
     // Process pressing of Return button on keypad
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -105,7 +106,10 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         }
         searchField.text = ""
     }
-    
+}
+
+// MARK: - WeatherManagerDelegate
+extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel) {
         cityNameInfo = weather.cityName
         temperatureInfo = weather.temperatureString
@@ -116,7 +120,6 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         humidityInfo = weather.humidityString
         windSpeedInfo = weather.windSpeedString
         windDirInfo = weather.windDirString
-        print(weather.windDirString)
         windGustInfo = weather.windGustString
         
         DispatchQueue.main.async {
@@ -125,6 +128,10 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
             self.weatherSymbolImageView.image = UIImage(systemName: weather.conditionName)
             self.feelsLikeTempLabel.text = weather.feelsLikeString
         }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
     }
 }
 

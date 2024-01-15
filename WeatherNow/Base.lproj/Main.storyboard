@@ -13,7 +13,7 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="WeatherViewController" customModule="WeatherNow" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -226,7 +226,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgf-Op-3UU">
                                                 <rect key="frame" x="156.66666666666666" y="0.0" width="50" height="23.333333333333332"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="ak5-gj-qbi"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="ak5-gj-qbi"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
                                                 <nil key="textColor"/>
@@ -255,7 +255,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMR-jz-BfL">
                                                 <rect key="frame" x="144.66666666666666" y="0.0" width="50" height="23.333333333333332"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="nxy-FJ-UeE"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="nxy-FJ-UeE"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
                                                 <nil key="textColor"/>
@@ -284,7 +284,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JjC-6z-htl">
                                                 <rect key="frame" x="72.333333333333329" y="0.0" width="50" height="23.333333333333332"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="saa-Ng-1u7"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="saa-Ng-1u7"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
                                                 <nil key="textColor"/>
@@ -313,7 +313,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5Q-kh-cwf">
                                                 <rect key="frame" x="60.333333333333329" y="0.0" width="50" height="23.333333333333332"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="4fm-4L-hxI"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="4fm-4L-hxI"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
                                                 <nil key="textColor"/>
@@ -447,7 +447,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Cf-9H-Zuw">
-                                        <rect key="frame" x="0.0" y="250.66666666666671" width="232.66666666666666" height="23.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="250.66666666666671" width="212.66666666666666" height="23.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity:  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtH-4g-mfX">
                                                 <rect key="frame" x="0.0" y="0.0" width="132.66666666666666" height="23.333333333333332"/>
@@ -456,16 +456,16 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqv-Qc-e3d">
-                                                <rect key="frame" x="132.66666666666666" y="0.0" width="50" height="23.333333333333332"/>
+                                                <rect key="frame" x="132.66666666666666" y="0.0" width="30" height="23.333333333333332"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="7YZ-tE-ZtX"/>
+                                                    <constraint firstAttribute="width" constant="30" id="7YZ-tE-ZtX"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sds-wv-704">
-                                                <rect key="frame" x="182.66666666666666" y="0.0" width="50" height="23.333333333333332"/>
+                                                <rect key="frame" x="162.66666666666666" y="0.0" width="50" height="23.333333333333332"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="4vf-me-6ZS"/>
                                                 </constraints>
@@ -494,13 +494,16 @@
                     <connections>
                         <outlet property="cityNameLabel" destination="xNJ-TW-K7u" id="P23-L5-DHl"/>
                         <outlet property="feelsLikeLabel" destination="fMR-jz-BfL" id="l8r-Kg-d23"/>
+                        <outlet property="gustMSLabel" destination="FOX-PP-rTU" id="PnF-Cn-pSQ"/>
                         <outlet property="gustSpeedLabel" destination="EAZ-14-rZ9" id="P0I-jw-blb"/>
                         <outlet property="humidityLabel" destination="mqv-Qc-e3d" id="LWR-Ie-nck"/>
                         <outlet property="maxTempLabel" destination="JjC-6z-htl" id="FdR-Q9-KZz"/>
                         <outlet property="minTempLabel" destination="L5Q-kh-cwf" id="G6s-HK-2Yc"/>
                         <outlet property="pressureLabel" destination="pmi-uk-gJi" id="Vms-Pv-IFj"/>
                         <outlet property="temperatureLabel" destination="Zgf-Op-3UU" id="zia-XW-t8S"/>
+                        <outlet property="windDegLabel" destination="W3P-ji-goh" id="aPn-GY-7U8"/>
                         <outlet property="windDirLabel" destination="XZ5-wN-5jZ" id="cgJ-r1-d58"/>
+                        <outlet property="windMSLabel" destination="L4m-si-V0i" id="Idk-D6-mU0"/>
                         <outlet property="windSpeedLabel" destination="Jeb-9n-0Ji" id="2NM-Le-tAy"/>
                     </connections>
                 </viewController>

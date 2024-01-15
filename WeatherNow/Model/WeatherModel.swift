@@ -71,14 +71,26 @@ struct WeatherModel {
     }
     
     var windSpeedString: String {
-        return String(format: "%.1f", wind_speed)
+        if wind_speed == -1 {
+            return("N/A")
+        } else {
+            return String(format: "%.1f", wind_speed)
+        }
     }
  
     var windDirString: String {
-        return String(wind_direction)
+        if wind_direction == -1 {
+            return("N/A")
+        } else {
+            return String(wind_direction)
+        }
     }
     
     var windGustString: String {
-        return String(format: "%.1f", wind_gust)
+        if wind_gust == -1 {
+            return("N/A")
+        } else {
+            return String(format: "%.1f", wind_gust)
+        }
     }
 }
