@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EvG-nX-61Y">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,12 +12,12 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="WeatherViewController" customModule="WeatherNow" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="AXM-ui-70l">
-                                <rect key="frame" x="0.0" y="59" width="393" height="855"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="855"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-RJ-Q1h">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
@@ -142,9 +141,8 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" backgroundImage="info.circle" catalog="system"/>
                                                 <connections>
-                                                    <action selector="infoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z0l-kO-4pu"/>
                                                     <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PBa-EM-JLX"/>
-                                                    <segue destination="9az-fo-4EJ" kind="presentation" identifier="goToInfo" id="xh7-89-5Pc"/>
+                                                    <segue destination="9az-fo-4EJ" kind="show" identifier="goToInfo" id="d0M-6o-fZN"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -168,6 +166,7 @@
                             <constraint firstItem="AXM-ui-70l" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xfw-qW-3C3"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="UCq-mv-XhB"/>
                     <connections>
                         <outlet property="celsiusLabel" destination="g2W-lR-tfk" id="9dc-b3-46v"/>
                         <outlet property="celsiusLabel2" destination="2N2-Wg-iyf" id="PwL-RU-atf"/>
@@ -176,7 +175,6 @@
                         <outlet property="degreeLabel2" destination="7JJ-T1-fx2" id="v03-9C-MQt"/>
                         <outlet property="feelsLikeLabel" destination="TVa-3F-I1C" id="m1H-G0-W8m"/>
                         <outlet property="feelsLikeTempLabel" destination="UgN-zy-i0f" id="Xg3-FS-It4"/>
-                        <outlet property="infoButton" destination="yoO-l1-pga" id="Ed8-nR-1kH"/>
                         <outlet property="searchField" destination="6H7-nl-E2R" id="XYP-Jg-rsy"/>
                         <outlet property="temperatureLabel" destination="lPw-Tw-sub" id="1wk-aZ-Z74"/>
                         <outlet property="weatherSymbolImageView" destination="2ve-YY-usE" id="kyd-Ez-LH9"/>
@@ -184,35 +182,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
+            <point key="canvasLocation" x="1057.2519083969464" y="-34.507042253521128"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="PyP-la-6l1">
             <objects>
                 <viewController id="9az-fo-4EJ" customClass="InfoViewController" customModule="WeatherNow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cvR-hf-aO1" customClass="Info">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CityName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNJ-TW-K7u">
-                                <rect key="frame" x="100" y="73.333333333333329" width="193" height="46.666666666666671"/>
+                                <rect key="frame" x="40" y="176" width="313" height="46.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2h-tY-cIl">
-                                <rect key="frame" x="157" y="673" width="79" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain">
-                                    <imageReference key="image" image="arrowshape.backward.circle" catalog="system" symbolScale="large"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="backButtonPressed:" destination="9az-fo-4EJ" eventType="touchUpInside" id="WYb-vx-Qju"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JUr-Ey-E7n">
-                                <rect key="frame" x="40" y="160" width="313" height="274"/>
+                                <rect key="frame" x="40" y="262.66666666666669" width="313" height="274.00000000000006"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bWj-kv-5fJ">
                                         <rect key="frame" x="0.0" y="0.0" width="256.66666666666669" height="23.333333333333332"/>
@@ -244,7 +231,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CqH-uV-RZQ">
-                                        <rect key="frame" x="0.0" y="31.333333333333343" width="244.66666666666666" height="23.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="31.333333333333314" width="244.66666666666666" height="23.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feels like: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ncc-QJ-rnB">
                                                 <rect key="frame" x="0.0" y="0.0" width="144.66666666666666" height="23.333333333333332"/>
@@ -273,7 +260,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AV-DB-rxm">
-                                        <rect key="frame" x="0.0" y="62.666666666666664" width="172.33333333333334" height="23.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="62.666666666666636" width="172.33333333333334" height="23.333333333333336"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V76-pP-SLI">
                                                 <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="23.333333333333332"/>
@@ -360,7 +347,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Gb-9A-Xm2">
-                                        <rect key="frame" x="0.0" y="156.66666666666669" width="292.66666666666669" height="23.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="156.66666666666663" width="292.66666666666669" height="23.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind Direction: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STL-ky-2cO">
                                                 <rect key="frame" x="0.0" y="0.0" width="192.66666666666666" height="23.333333333333332"/>
@@ -483,14 +470,16 @@
                         <constraints>
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="40" id="3A6-HY-Oz6"/>
                             <constraint firstItem="df0-lv-inK" firstAttribute="trailing" secondItem="JUr-Ey-E7n" secondAttribute="trailing" constant="40" id="5rb-Em-eht"/>
+                            <constraint firstItem="JUr-Ey-E7n" firstAttribute="top" secondItem="xNJ-TW-K7u" secondAttribute="bottom" constant="40" id="98D-Td-5za"/>
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="top" secondItem="xNJ-TW-K7u" secondAttribute="bottom" constant="40" id="FCD-7c-keV"/>
+                            <constraint firstItem="xNJ-TW-K7u" firstAttribute="top" secondItem="df0-lv-inK" secondAttribute="top" constant="73" id="Nd2-5c-PQ4"/>
+                            <constraint firstItem="xNJ-TW-K7u" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="40" id="PUD-tF-XLA"/>
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="top" secondItem="xNJ-TW-K7u" secondAttribute="bottom" constant="40" id="QAE-cN-YeG"/>
-                            <constraint firstItem="xNJ-TW-K7u" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="100" id="eaq-wO-L00"/>
-                            <constraint firstItem="df0-lv-inK" firstAttribute="trailing" secondItem="xNJ-TW-K7u" secondAttribute="trailing" constant="100" id="pr2-ah-EP2"/>
+                            <constraint firstItem="df0-lv-inK" firstAttribute="trailing" secondItem="xNJ-TW-K7u" secondAttribute="trailing" constant="40" id="ZcF-aO-JIF"/>
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="40" id="q4O-AS-l0M"/>
-                            <constraint firstItem="xNJ-TW-K7u" firstAttribute="top" secondItem="df0-lv-inK" secondAttribute="top" constant="73.329999999999998" id="zUQ-Py-CaK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="KN6-tQ-MWX"/>
                     <connections>
                         <outlet property="cityNameLabel" destination="xNJ-TW-K7u" id="P23-L5-DHl"/>
                         <outlet property="feelsLikeLabel" destination="fMR-jz-BfL" id="l8r-Kg-d23"/>
@@ -509,17 +498,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61l-rp-J7V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1006.8702290076335" y="-15.492957746478874"/>
+            <point key="canvasLocation" x="1933.5877862595419" y="-15.492957746478874"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hHF-Ch-0F5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EvG-nX-61Y" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Map-cG-FEi">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="83X-o9-odC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XJ8-zv-NvA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
         </scene>
     </scenes>
     <resources>
-        <image name="arrowshape.backward.circle" catalog="system" width="128" height="123"/>
         <image name="cloud" catalog="system" width="128" height="87"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="location.circle" catalog="system" width="128" height="123"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemCyanColor">
-            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

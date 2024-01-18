@@ -58,11 +58,4 @@ class InfoViewController: UIViewController {
             gustMSLabel.isHidden = true
         }
     }
-    
-    
-    
-    @IBAction func backButtonPressed(_ sender: UIButton) {
-        dismiss(animated: true,completion: nil)
-    }
-    
 }
