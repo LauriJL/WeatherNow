@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EvG-nX-61Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6gr-sn-nFD">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +13,7 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="WeatherViewController" customModule="WeatherNow" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -64,7 +65,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2ve-YY-usE">
-                                        <rect key="frame" x="136.66666666666666" y="296.66666666666669" width="119.99999999999997" height="115"/>
+                                        <rect key="frame" x="136.66666666666666" y="296.66666666666669" width="119.99999999999997" height="114.99999999999994"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="120" id="Pq4-GF-NRc"/>
                                             <constraint firstAttribute="width" constant="120" id="UaB-rZ-5dg"/>
@@ -133,24 +134,20 @@
                                             <constraint firstItem="TVa-3F-I1C" firstAttribute="top" secondItem="VaI-Hw-nkQ" secondAttribute="top" id="ktK-7q-R22"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kTg-6c-PcO">
-                                        <rect key="frame" x="146.66666666666666" y="735" width="100" height="120"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yoO-l1-pga">
-                                                <rect key="frame" x="0.0" y="1" width="100" height="118.66666666666667"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" backgroundImage="info.circle" catalog="system"/>
-                                                <connections>
-                                                    <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PBa-EM-JLX"/>
-                                                    <segue destination="9az-fo-4EJ" kind="show" identifier="goToInfo" id="d0M-6o-fZN"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="CmX-li-2Od"/>
-                                            <constraint firstAttribute="height" constant="50" id="oQ5-N7-rOf"/>
-                                        </constraints>
-                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yoO-l1-pga">
+                                        <rect key="frame" x="183.66666666666666" y="735" width="25.666666666666657" height="120"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleShadowColor" systemColor="systemBackgroundColor"/>
+                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PBa-EM-JLX"/>
+                                            <segue destination="9az-fo-4EJ" kind="show" identifier="goToInfo" id="d0M-6o-fZN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="HO4-RJ-Q1h" firstAttribute="leading" secondItem="AXM-ui-70l" secondAttribute="leading" id="KG4-5x-wY9"/>
@@ -182,7 +179,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1057.2519083969464" y="-34.507042253521128"/>
+            <point key="canvasLocation" x="2909.1603053435115" y="-34.507042253521128"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="PyP-la-6l1">
@@ -464,6 +461,17 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFP-Bj-aNa">
+                                <rect key="frame" x="171" y="576" width="51" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="map" catalog="system">
+                                    <backgroundConfiguration key="background"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="mapButtonPressed:" destination="9az-fo-4EJ" eventType="touchUpInside" id="hpo-Bg-HHZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="df0-lv-inK"/>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>
@@ -471,10 +479,8 @@
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="40" id="3A6-HY-Oz6"/>
                             <constraint firstItem="df0-lv-inK" firstAttribute="trailing" secondItem="JUr-Ey-E7n" secondAttribute="trailing" constant="40" id="5rb-Em-eht"/>
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="top" secondItem="xNJ-TW-K7u" secondAttribute="bottom" constant="40" id="98D-Td-5za"/>
-                            <constraint firstItem="JUr-Ey-E7n" firstAttribute="top" secondItem="xNJ-TW-K7u" secondAttribute="bottom" constant="40" id="FCD-7c-keV"/>
                             <constraint firstItem="xNJ-TW-K7u" firstAttribute="top" secondItem="df0-lv-inK" secondAttribute="top" constant="73" id="Nd2-5c-PQ4"/>
                             <constraint firstItem="xNJ-TW-K7u" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="40" id="PUD-tF-XLA"/>
-                            <constraint firstItem="JUr-Ey-E7n" firstAttribute="top" secondItem="xNJ-TW-K7u" secondAttribute="bottom" constant="40" id="QAE-cN-YeG"/>
                             <constraint firstItem="df0-lv-inK" firstAttribute="trailing" secondItem="xNJ-TW-K7u" secondAttribute="trailing" constant="40" id="ZcF-aO-JIF"/>
                             <constraint firstItem="JUr-Ey-E7n" firstAttribute="leading" secondItem="df0-lv-inK" secondAttribute="leading" constant="40" id="q4O-AS-l0M"/>
                         </constraints>
@@ -486,6 +492,7 @@
                         <outlet property="gustMSLabel" destination="FOX-PP-rTU" id="PnF-Cn-pSQ"/>
                         <outlet property="gustSpeedLabel" destination="EAZ-14-rZ9" id="P0I-jw-blb"/>
                         <outlet property="humidityLabel" destination="mqv-Qc-e3d" id="LWR-Ie-nck"/>
+                        <outlet property="locationBUtton" destination="lFP-Bj-aNa" id="tW6-rc-vrX"/>
                         <outlet property="maxTempLabel" destination="JjC-6z-htl" id="FdR-Q9-KZz"/>
                         <outlet property="minTempLabel" destination="L5Q-kh-cwf" id="G6s-HK-2Yc"/>
                         <outlet property="pressureLabel" destination="pmi-uk-gJi" id="Vms-Pv-IFj"/>
@@ -498,25 +505,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61l-rp-J7V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1933.5877862595419" y="-15.492957746478874"/>
+            <point key="canvasLocation" x="3787.0229007633588" y="-15.492957746478874"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="hHF-Ch-0F5">
+        <scene sceneID="sQt-eR-kIQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EvG-nX-61Y" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6gr-sn-nFD" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Map-cG-FEi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HuU-8G-mjf">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="83X-o9-odC"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="hHk-A1-ucs"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XJ8-zv-NvA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RbD-Ag-ZGR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
+            <point key="canvasLocation" x="1982.4427480916029" y="-34.507042253521128"/>
         </scene>
     </scenes>
     <resources>
@@ -524,8 +531,12 @@
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="location.circle" catalog="system" width="128" height="123"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="map" catalog="system" width="128" height="112"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

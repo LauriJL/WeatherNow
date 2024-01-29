@@ -36,10 +36,12 @@ class WeatherViewController: UIViewController {
     var windSpeedInfo: String = ""
     var windDirInfo: String = ""
     var windGustInfo: String = ""
+    var latitudeInfo: Double = 0.0
+    var longitudeInfo: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+              
         // Location
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -55,7 +57,6 @@ class WeatherViewController: UIViewController {
     }
     
     @IBAction func infoButtonPressed(_ sender: UIButton) {
-        print("Info pressed")
         self.performSegue(withIdentifier: "goToInfo", sender: self)
     }
     
@@ -63,6 +64,8 @@ class WeatherViewController: UIViewController {
         if segue.identifier == "goToInfo" {
             let destinationVC = segue.destination as! InfoViewController
             destinationVC.cityName = cityNameInfo
+            destinationVC.latitude = latitudeInfo
+            destinationVC.longitude = longitudeInfo
             destinationVC.temperature = temperatureInfo
             destinationVC.feelsLike = feelsLikeInfo
             destinationVC.maxTemp = maxTempInfo
@@ -112,6 +115,8 @@ extension WeatherViewController: UITextFieldDelegate {
 extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel) {
         cityNameInfo = weather.cityName
+        latitudeInfo = weather.latitude
+        longitudeInfo = weather.longitude
         temperatureInfo = weather.temperatureString
         feelsLikeInfo = weather.feelsLikeString
         maxTempInfo = weather.temp_maxString
@@ -142,7 +147,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
-            print(lat,lon)
             weatherMgr.fetchWeatherData(latitude: lat, longitude: lon)
         }
     }

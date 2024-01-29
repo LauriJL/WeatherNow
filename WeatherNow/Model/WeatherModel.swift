@@ -10,6 +10,8 @@ import Foundation
 struct WeatherModel {
     // Stored properties
     let cityName: String
+    let latitude: Double
+    let longitude: Double
     let conditionId: Int
     let temperature: Double
     let feels_like: Double
@@ -20,8 +22,7 @@ struct WeatherModel {
     let wind_speed: Double
     let wind_direction: Int
     let wind_gust: Double
-    //let sunrise: Int
-    //let sunset: Int
+
     
     
     // Computed properties
@@ -44,6 +45,14 @@ struct WeatherModel {
         default:
             return "cloud"
         }
+    }
+    
+    var latitudeString: String {
+        return String(format: "%.4f", latitude)
+    }
+    
+    var longitudeString: String {
+        return String(format: "%.4f", longitude)
     }
     
     var temperatureString: String {

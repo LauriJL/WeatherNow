@@ -10,6 +10,7 @@ import Foundation
 struct WeatherData: Decodable {
     let name: String
     let main: Main
+    let coord: Coord
     let weather: [Weather]
     let wind: Wind
     let sys: Sys
@@ -22,6 +23,11 @@ struct Main: Decodable {
     let temp_max: Double
     let pressure: Int
     let humidity: Int
+}
+
+struct Coord: Decodable {
+    let lon: Double
+    let lat: Double
 }
 
 struct Weather: Decodable {

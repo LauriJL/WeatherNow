@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 class InfoViewController: UIViewController {
     
@@ -22,8 +23,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var gustMSLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
-    
-    
+    @IBOutlet weak var locationBUtton: UIButton!
     
     var cityName: String?
     var temperature: String?
@@ -35,6 +35,8 @@ class InfoViewController: UIViewController {
     var windSpeed: String?
     var windDir: String?
     var windGust: String?
+    var latitude: Double?
+    var longitude: Double?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,4 +60,37 @@ class InfoViewController: UIViewController {
             gustMSLabel.isHidden = true
         }
     }
+    
+    
+    @IBAction func mapButtonPressed(_ sender: UIButton) {
+        //self.performSegue(withIdentifier: "goToMap", sender: self)
+        locateCity()
+    }
+    
+    func locateCity() {
+        
+        let latitude: CLLocationDegrees = latitude!
+        let longitude: CLLocationDegrees = longitude!
+        
+        let regionDistance:CLLocationDistance = 10000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = cityName
+        mapItem.openInMaps(launchOptions: options)
+    }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "goToMap" {
+//            let destinationVC = segue.destination as! MapViewController
+//            destinationVC.cityName = cityName
+//            destinationVC.latitude = latitude
+//            destinationVC.longitude = longitude
+//        }
+//    }
 }

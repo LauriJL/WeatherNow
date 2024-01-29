@@ -23,12 +23,10 @@ struct WeatherMgr {
         if cityName != nil {
             let urlString = "\(weatherURL)&appid=\(api_key)&q=\(cityName ?? "Helsinki")"
             urlRequest(urlString: urlString)
-            print(urlString)
         } else {
             let urlString = "\(weatherURL)&appid=\(api_key)&lat=\(latitude ?? 60.24416)&lon=\(longitude ?? 24.89239)"
             urlRequest(urlString: urlString)
-            print(urlString)
-        }
+         }
     }
     
     func urlRequest(urlString: String) {
@@ -60,6 +58,8 @@ struct WeatherMgr {
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
             let name = decodedData.name
+            let latitude = decodedData.coord.lat
+            let longitude = decodedData.coord.lon
             let temperature = decodedData.main.temp
             let feels_like = decodedData.main.feels_like
             let temp_max = decodedData.main.temp_max
@@ -71,7 +71,7 @@ struct WeatherMgr {
             let wind_gust = decodedData.wind.gust ?? -1
             let conditionCode = decodedData.weather[0].id
             
-            let weather = WeatherModel(cityName: name, conditionId: conditionCode, temperature: temperature, feels_like: feels_like, temp_min: temp_min, temp_max: temp_max, pressure: pressure, humidity: humidity, wind_speed: wind_speed, wind_direction: wind_direction, wind_gust: wind_gust)
+            let weather = WeatherModel(cityName: name, latitude: latitude, longitude: longitude, conditionId: conditionCode, temperature: temperature, feels_like: feels_like, temp_min: temp_min, temp_max: temp_max, pressure: pressure, humidity: humidity, wind_speed: wind_speed, wind_direction: wind_direction, wind_gust: wind_gust)
             
             return weather
         } catch {
