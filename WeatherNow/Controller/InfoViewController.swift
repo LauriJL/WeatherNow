@@ -84,13 +84,4 @@ class InfoViewController: UIViewController {
         mapItem.name = cityName
         mapItem.openInMaps(launchOptions: options)
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "goToMap" {
-//            let destinationVC = segue.destination as! MapViewController
-//            destinationVC.cityName = cityName
-//            destinationVC.latitude = latitude
-//            destinationVC.longitude = longitude
-//        }
-//    }
 }

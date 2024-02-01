@@ -41,7 +41,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-              
+        
         // Location
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -77,7 +77,6 @@ class WeatherViewController: UIViewController {
             destinationVC.windGust = windGustInfo
         }
     }
-
 }
 
 // MARK: - UITextFieldDelegate
