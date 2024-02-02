@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class WeatherViewController: UIViewController {
    
@@ -22,8 +23,14 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var celsiusLabel2: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     
+    @IBOutlet weak var savedLocations: UIPickerView!
+    
     var weatherMgr = WeatherMgr()
     let locationManager = CLLocationManager()
+    // CoreData
+    var savedLocationsArray = [SavedLocation]()
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // For info pane
     var cityNameInfo: String = ""
@@ -41,7 +48,8 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadLocations()
+       
         // Location
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -50,6 +58,10 @@ class WeatherViewController: UIViewController {
         // Delegates
         weatherMgr.delegate = self
         searchField.delegate = self
+        savedLocations.delegate = self
+        
+        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print(dataFilePath)
     }
     
     @IBAction func locationPressed(_ sender: UIButton) {
@@ -58,6 +70,25 @@ class WeatherViewController: UIViewController {
     
     @IBAction func infoButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "goToInfo", sender: self)
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        let location = cityNameInfo
+        let alert = UIAlertController(title: "Add \(location)?", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            let newLocation = SavedLocation(context: self.context)
+            newLocation.name = location
+            
+            self.savedLocationsArray.append(newLocation)
+            
+            self.saveLocation()
+            self.loadLocations()
+            self.savedLocations.reloadAllComponents()
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -137,6 +168,24 @@ extension WeatherViewController: WeatherManagerDelegate {
     func didFailWithError(error: Error) {
         print(error)
     }
+    
+    // MARK: - Data Manipulation Methods
+    
+    func saveLocation() {
+        do {
+            try context.save()
+         } catch {
+            print("Error saving context, \(error)")
+        }
+    }
+    
+    func loadLocations(with request: NSFetchRequest<SavedLocation> = SavedLocation.fetchRequest()) {
+        do {
+            savedLocationsArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context, \(error)")
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -152,5 +201,26 @@ extension WeatherViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+// MARK: - UIPickerView DataSource & Delegate
+
+extension WeatherViewController: UIPickerViewDataSource,UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return savedLocationsArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return savedLocationsArray[row].name!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selectedLocation = savedLocationsArray[row].name!
+        weatherMgr.fetchWeatherData(cityName: selectedLocation)
     }
 }
