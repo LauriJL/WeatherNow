@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import CoreData
+import MapKit
 
 class WeatherViewController: UIViewController {
    
@@ -23,8 +24,10 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var celsiusLabel2: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     
-    @IBOutlet weak var barButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIButton!
+    
+    @IBOutlet weak var removeButton: UIButton!
+    
     @IBOutlet weak var savedLocations: UIPickerView!
     
     var weatherMgr = WeatherMgr()
@@ -48,6 +51,8 @@ class WeatherViewController: UIViewController {
     var windGustInfo: String = ""
     var latitudeInfo: Double = 0.0
     var longitudeInfo: Double = 0.0
+    var latitude: Double?
+    var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +69,6 @@ class WeatherViewController: UIViewController {
         savedLocations.delegate = self
         
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        print(dataFilePath)
     }
     
     @IBAction func locationPressed(_ sender: UIButton) {
@@ -75,9 +79,15 @@ class WeatherViewController: UIViewController {
         self.performSegue(withIdentifier: "goToInfo", sender: self)
     }
     
+    
+    @IBAction func mapButtonPressed(_ sender: UIButton) {
+        locateCity(latitudeInfo: latitudeInfo, longitudeInfo: longitudeInfo, cityName: cityNameInfo)
+    }
+    
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         let location = cityNameInfo
-        let alert = UIAlertController(title: "Add \(location)?", message: "", preferredStyle: .alert)
+        checkIfSaved(location: cityNameInfo)
+        let alert = UIAlertController(title: "Save \(location)?", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
             let newLocation = SavedLocation(context: self.context)
             newLocation.name = location
@@ -90,6 +100,7 @@ class WeatherViewController: UIViewController {
         }
         
         alert.addAction(action)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
     }
@@ -97,7 +108,7 @@ class WeatherViewController: UIViewController {
     
     @IBAction func removeButtonPressed(_ sender: UIButton) {
         let location = selectedLocationItem
-        print("Remove button pressed: \(location)")
+//        print("Remove button pressed: \(location)")
         removeLocation(location: location as! SavedLocation)
         self.saveLocation()
         self.loadLocations()
@@ -175,6 +186,7 @@ extension WeatherViewController: WeatherManagerDelegate {
             self.temperatureLabel.text = weather.temperatureString
             self.weatherSymbolImageView.image = UIImage(systemName: weather.conditionName)
             self.feelsLikeTempLabel.text = weather.feelsLikeString
+            self.checkIfSaved(location: weather.cityName)
         }
     }
     
@@ -183,7 +195,6 @@ extension WeatherViewController: WeatherManagerDelegate {
     }
     
     // MARK: - Data Manipulation Methods
-    
     func saveLocation() {
         do {
             try context.save()
@@ -208,6 +219,27 @@ extension WeatherViewController: WeatherManagerDelegate {
             print("Error deleting context, \(error)")
         }
     }
+    
+    func checkIfSaved(location: String) {
+        //let predicateCheck = NSPredicate(format: "name MATCHES %@", location)
+        do {
+            let fetchRequest : NSFetchRequest<SavedLocation> = SavedLocation.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "name MATCHES %@", location)
+            let fetchedResults = try context.fetch(fetchRequest)
+            print("Fetched results: \(fetchedResults)")
+            if fetchedResults.count == 1 {
+                saveButton.isEnabled = false
+                removeButton.isEnabled = true
+            } 
+            if fetchedResults.count == 0 {
+                saveButton.isEnabled = true
+                removeButton.isEnabled = false
+            }
+        }
+        catch {
+            print ("fetch task failed", error)
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -226,8 +258,26 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
 }
 
-// MARK: - UIPickerView DataSource & Delegate
+// MARK: - Locate
+func locateCity(latitudeInfo: Double, longitudeInfo: Double, cityName: String) {
 
+    let latitude: CLLocationDegrees = latitudeInfo
+    let longitude: CLLocationDegrees = longitudeInfo
+    
+    let regionDistance:CLLocationDistance = 10000
+    let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+    let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+    let options = [
+        MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+        MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+    ]
+    let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+    let mapItem = MKMapItem(placemark: placemark)
+    mapItem.name = cityName
+    mapItem.openInMaps(launchOptions: options)
+}
+
+// MARK: - UIPickerView DataSource & Delegate
 extension WeatherViewController: UIPickerViewDataSource,UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -244,7 +294,7 @@ extension WeatherViewController: UIPickerViewDataSource,UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selectedLocation = savedLocationsArray[row].name!
         selectedLocationItem = savedLocationsArray[row]
-        print("Location id: \(selectedLocationItem)")
+//        print("Location id: \(selectedLocationItem)")
         weatherMgr.fetchWeatherData(cityName: selectedLocation)
     }
 }
