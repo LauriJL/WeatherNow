@@ -23,12 +23,15 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var celsiusLabel2: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     
+    @IBOutlet weak var barButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var savedLocations: UIPickerView!
     
     var weatherMgr = WeatherMgr()
     let locationManager = CLLocationManager()
     // CoreData
     var savedLocationsArray = [SavedLocation]()
+    var selectedLocationItem = NSObject()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -49,7 +52,7 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLocations()
-       
+        
         // Location
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -89,6 +92,16 @@ class WeatherViewController: UIViewController {
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func removeButtonPressed(_ sender: UIButton) {
+        let location = selectedLocationItem
+        print("Remove button pressed: \(location)")
+        removeLocation(location: location as! SavedLocation)
+        self.saveLocation()
+        self.loadLocations()
+        self.savedLocations.reloadAllComponents()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -174,7 +187,7 @@ extension WeatherViewController: WeatherManagerDelegate {
     func saveLocation() {
         do {
             try context.save()
-         } catch {
+        } catch {
             print("Error saving context, \(error)")
         }
     }
@@ -184,6 +197,15 @@ extension WeatherViewController: WeatherManagerDelegate {
             savedLocationsArray = try context.fetch(request)
         } catch {
             print("Error fetching data from context, \(error)")
+        }
+    }
+    
+    func removeLocation(location: SavedLocation) {
+        context.delete(location)
+        do {
+            try context.save()
+        } catch {
+            print("Error deleting context, \(error)")
         }
     }
 }
@@ -221,6 +243,8 @@ extension WeatherViewController: UIPickerViewDataSource,UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selectedLocation = savedLocationsArray[row].name!
+        selectedLocationItem = savedLocationsArray[row]
+        print("Location id: \(selectedLocationItem)")
         weatherMgr.fetchWeatherData(cityName: selectedLocation)
     }
 }
