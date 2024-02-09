@@ -12,11 +12,13 @@ import RealmSwift
 
 class WeatherViewController: UIViewController {
     
+    // Realm
     let realm = try! Realm()
     // initialize collection of Results
     var savedLocationsList: Results<SavedLocations>?
     var selectedLocationItem: SavedLocations?
-   
+    
+    // IBOutlets
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var weatherSymbolImageView: UIImageView!
@@ -53,6 +55,12 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLocations()
+        
+        // Dismiss keypad
+        self.view.isUserInteractionEnabled = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyPad))
+        self.view.addGestureRecognizer(tap)
+        tap.numberOfTapsRequired = 1
         
         // Location
         locationManager.delegate = self
@@ -141,21 +149,28 @@ extension WeatherViewController: UITextFieldDelegate {
     }
     
     // Validate contents of text field
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if searchField.text != "" {
-            return true
-        } else {
-            textField.placeholder = "Enter city name"
-            return false
-        }
-    }
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        if searchField.text != "" {
+//            return true
+//        } 
+//        else {
+//            textField.placeholder = "Enter city name"
+//            return false
+//        }
+//    }
     
     // Empty text field
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let city = searchField.text {
-            weatherMgr.fetchWeatherData(cityName: city)
+            if let city = searchField.text {
+                weatherMgr.fetchWeatherData(cityName: city)
+            }
+            searchField.text = ""
         }
-        searchField.text = ""
+    
+    
+    // Dismiss keypad
+    @objc func dismissKeyPad(gesture: UITapGestureRecognizer) {
+        searchField.endEditing(true)
     }
 }
 
@@ -238,7 +253,7 @@ extension WeatherViewController: WeatherManagerDelegate {
         let options = [
             MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
             MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
-        ]
+            ]
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = cityNameInfo
