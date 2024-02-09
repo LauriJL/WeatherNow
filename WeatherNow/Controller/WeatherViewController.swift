@@ -7,8 +7,15 @@
 
 import UIKit
 import CoreLocation
+import MapKit
+import RealmSwift
 
 class WeatherViewController: UIViewController {
+    
+    let realm = try! Realm()
+    // initialize collection of Results
+    var savedLocationsList: Results<SavedLocations>?
+    var selectedLocationItem: SavedLocations?
    
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
@@ -21,11 +28,15 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var degreeLabel2: UILabel!
     @IBOutlet weak var celsiusLabel2: UILabel!
     @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var locateButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var removeButton: UIButton!
+    @IBOutlet weak var savedLocations: UIPickerView!
     
     var weatherMgr = WeatherMgr()
     let locationManager = CLLocationManager()
-    
-    // For info pane
+      
+    // Data for info pane
     var cityNameInfo: String = ""
     var temperatureInfo: String = ""
     var feelsLikeInfo: String = ""
@@ -41,6 +52,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadLocations()
         
         // Location
         locationManager.delegate = self
@@ -50,6 +62,7 @@ class WeatherViewController: UIViewController {
         // Delegates
         weatherMgr.delegate = self
         searchField.delegate = self
+        savedLocations.delegate = self
     }
     
     @IBAction func locationPressed(_ sender: UIButton) {
@@ -58,6 +71,42 @@ class WeatherViewController: UIViewController {
     
     @IBAction func infoButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "goToInfo", sender: self)
+    }
+    
+    @IBAction func mapButtonPressed(_ sender: UIButton) {
+        locateCity()
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        let newLocation = SavedLocations()
+        newLocation.savedLocation = cityNameInfo
+        checkIfSaved(location: cityNameInfo)
+        let alert = UIAlertController(title: "Save \(cityNameInfo)?", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.saveLocation(location: newLocation)
+            self.loadLocations()
+            self.savedLocations.reloadAllComponents()
+        }
+        
+        alert.addAction(action)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func removeButtonPressed(_ sender: UIButton) {
+        let location = selectedLocationItem
+        let alert = UIAlertController(title: "Remove \(cityNameInfo)?", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.removeLocation(location: location!)
+            self.loadLocations()
+            self.savedLocations.reloadAllComponents()
+        }
+        
+        alert.addAction(action)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -131,11 +180,69 @@ extension WeatherViewController: WeatherManagerDelegate {
             self.temperatureLabel.text = weather.temperatureString
             self.weatherSymbolImageView.image = UIImage(systemName: weather.conditionName)
             self.feelsLikeTempLabel.text = weather.feelsLikeString
+            self.checkIfSaved(location: weather.cityName)
         }
     }
     
     func didFailWithError(error: Error) {
         print(error)
+    }
+    
+    // MARK: - Data Manipulation Methods
+    func saveLocation(location: SavedLocations) {
+        do {
+            try realm.write {
+                realm.add(location)
+            }
+        } catch {
+            print("Error in saving location: \(error)")
+        }
+    }
+    
+    func removeLocation(location: SavedLocations) {
+        do {
+            try self.realm.write {
+                self.realm.delete(location)
+                self.loadLocations()
+            }
+        } catch {
+            print("Error deleting category, \(error)")
+        }
+    }
+    
+    func checkIfSaved(location: String) {
+        var searchResults = 0
+        searchResults = (savedLocationsList?.filter("savedLocation CONTAINS[cd] %@", location))!.count
+        if searchResults >= 1 {
+            saveButton.isEnabled = false
+            removeButton.isEnabled = true
+        } else {
+            saveButton.isEnabled = true
+            removeButton.isEnabled = false
+        }
+    }
+    
+    func loadLocations() {
+        savedLocationsList = realm.objects(SavedLocations.self)
+        savedLocations.reloadAllComponents()
+    }
+    
+    // MARK: - Location
+    func locateCity() {
+        
+        let latitude: CLLocationDegrees = latitudeInfo
+        let longitude: CLLocationDegrees = longitudeInfo
+        let regionDistance:CLLocationDistance = 10000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = cityNameInfo
+        mapItem.openInMaps(launchOptions: options)
     }
 }
 
@@ -152,5 +259,26 @@ extension WeatherViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+// MARK: - UIPickerView DataSource & Delegate
+extension WeatherViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return savedLocationsList?.count ?? 0
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return savedLocationsList?[row].savedLocation
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selectedLocation = savedLocationsList?[row].savedLocation
+        selectedLocationItem = savedLocationsList?[row]
+        weatherMgr.fetchWeatherData(cityName: selectedLocation)
     }
 }

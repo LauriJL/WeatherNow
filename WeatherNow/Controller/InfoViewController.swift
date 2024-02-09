@@ -10,7 +10,7 @@ import MapKit
 
 class InfoViewController: UIViewController {
     
-    @IBOutlet weak var cityNameLabel: UILabel!
+//    @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var feelsLikeLabel: UILabel!
     @IBOutlet weak var maxTempLabel: UILabel!
@@ -23,7 +23,6 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var gustMSLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
-    @IBOutlet weak var locationBUtton: UIButton!
     
     var cityName: String?
     var temperature: String?
@@ -40,7 +39,7 @@ class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        cityNameLabel.text = cityName
+//        cityNameLabel.text = cityName
         temperatureLabel.text = temperature
         feelsLikeLabel.text = feelsLike
         maxTempLabel.text = maxTemp
@@ -61,27 +60,7 @@ class InfoViewController: UIViewController {
         }
     }
     
-    
-    @IBAction func mapButtonPressed(_ sender: UIButton) {
-        //self.performSegue(withIdentifier: "goToMap", sender: self)
-        locateCity()
-    }
-    
-    func locateCity() {
-        
-        let latitude: CLLocationDegrees = latitude!
-        let longitude: CLLocationDegrees = longitude!
-        
-        let regionDistance:CLLocationDistance = 10000
-        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
-        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
-        let options = [
-            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
-            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
-        ]
-        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = cityName
-        mapItem.openInMaps(launchOptions: options)
+    override func viewWillAppear(_ animated: Bool) {
+        title = cityName
     }
 }

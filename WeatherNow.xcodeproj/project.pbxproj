@@ -18,6 +18,9 @@
 		39B6AFFC2B48303F003D2D58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39B6AFFB2B48303F003D2D58 /* Assets.xcassets */; };
 		39B6AFFF2B48303F003D2D58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B6AFFD2B48303F003D2D58 /* LaunchScreen.storyboard */; };
 		39D7EE0E2B4C1945007E5B12 /* WeatherMgr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D7EE0D2B4C1944007E5B12 /* WeatherMgr.swift */; };
+		39EEC8A72B761A24008BDBFB /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 39EEC8A62B761A24008BDBFB /* Realm */; };
+		39EEC8A92B761A24008BDBFB /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39EEC8A82B761A24008BDBFB /* RealmSwift */; };
+		39EEC8AD2B76200D008BDBFB /* SavedLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEC8AC2B76200D008BDBFB /* SavedLocations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,7 @@
 		39B6AFFE2B48303F003D2D58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39B6B0002B48303F003D2D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39D7EE0D2B4C1944007E5B12 /* WeatherMgr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMgr.swift; sourceTree = "<group>"; };
+		39EEC8AC2B76200D008BDBFB /* SavedLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLocations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39EEC8A92B761A24008BDBFB /* RealmSwift in Frameworks */,
+				39EEC8A72B761A24008BDBFB /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +100,7 @@
 				398D95222B4D287A006608D6 /* WeatherData.swift */,
 				39D7EE0D2B4C1944007E5B12 /* WeatherMgr.swift */,
 				398D95242B4D2E58006608D6 /* WeatherModel.swift */,
+				39EEC8AC2B76200D008BDBFB /* SavedLocations.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -114,6 +121,10 @@
 			dependencies = (
 			);
 			name = WeatherNow;
+			packageProductDependencies = (
+				39EEC8A62B761A24008BDBFB /* Realm */,
+				39EEC8A82B761A24008BDBFB /* RealmSwift */,
+			);
 			productName = WeatherNow;
 			productReference = 39B6AFEF2B48303D003D2D58 /* WeatherNow.app */;
 			productType = "com.apple.product-type.application";
@@ -142,6 +153,9 @@
 				Base,
 			);
 			mainGroup = 39B6AFE62B48303D003D2D58;
+			packageReferences = (
+				39EEC8A52B761A24008BDBFB /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = 39B6AFF02B48303D003D2D58 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -170,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39B6AFF72B48303D003D2D58 /* WeatherViewController.swift in Sources */,
+				39EEC8AD2B76200D008BDBFB /* SavedLocations.swift in Sources */,
 				398D95232B4D287A006608D6 /* WeatherData.swift in Sources */,
 				39D7EE0E2B4C1945007E5B12 /* WeatherMgr.swift in Sources */,
 				394704AD2B4FFF220021D067 /* InfoViewController.swift in Sources */,
@@ -403,6 +418,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		39EEC8A52B761A24008BDBFB /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.46.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		39EEC8A62B761A24008BDBFB /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39EEC8A52B761A24008BDBFB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		39EEC8A82B761A24008BDBFB /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39EEC8A52B761A24008BDBFB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 39B6AFE72B48303D003D2D58 /* Project object */;
 }
